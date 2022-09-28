@@ -1,4 +1,4 @@
-# Hermes-Front
+# Hermes
 Programación en Español
 
 ## Project versions
