@@ -26,20 +26,17 @@ connection.connect(function(err){
 }
  * */
 
-const dbConnect = async () => {
-  const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
-    host: process.env.HOST,
-    dialect: 'mysql',
-  });
+const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
+  host: process.env.HOST,
+  dialect: 'mysql',
+});
 
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
+sequelize.authenticate().then(() => {
+  console.log('Connection has been established successfully.');
+}).catch((error) => {
+  console.error('Unable to connect to the database:', error);
+});
 
-  sequelize.close();
-};
+// sequelize.close();
 
-module.exports = dbConnect;
+module.exports = sequelize;

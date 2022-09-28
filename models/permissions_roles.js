@@ -1,31 +1,23 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users_categories_news', {
-    ID_USERS_CATEGORIES_NEWS: {
+  return sequelize.define('permissions_roles', {
+    ID_PERMISSIONS_ROLES: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true
     },
-    ID_NEWS: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    },
-    ID_USERS_EDITORS: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    },
-    ID_USERS: {
-      type: DataTypes.BIGINT,
-      allowNull: true
-    },
     ID_ROLES: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    ID_PERMISSION: {
       type: DataTypes.BIGINT,
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'users_categories_news',
+    tableName: 'permissions_roles',
     timestamps: false,
     indexes: [
       {
@@ -33,29 +25,21 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "ID_USERS_CATEGORIES_NEWS" },
+          { name: "ID_PERMISSIONS_ROLES" },
         ]
       },
       {
-        name: "users_ID_USERS_fk",
-        using: "BTREE",
-        fields: [
-          { name: "ID_USERS" },
-        ]
-      },
-      {
-        name: "Ref13",
-        using: "BTREE",
-        fields: [
-          { name: "ID_NEWS" },
-        ]
-      },
-      {
-        name: "Ref44",
+        name: "Ref65",
         using: "BTREE",
         fields: [
           { name: "ID_ROLES" },
-          { name: "ID_USERS_EDITORS" },
+        ]
+      },
+      {
+        name: "Ref76",
+        using: "BTREE",
+        fields: [
+          { name: "ID_PERMISSION" },
         ]
       },
     ]

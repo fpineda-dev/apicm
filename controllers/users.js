@@ -1,4 +1,4 @@
-const { users, createUsersEditors } = require('../models/users_editors');
+const { users } = require('../models/users');
 
 async function getAll(req, res) {
   const userEditors = await users.findAll(); // user_editors.findAll();
@@ -25,7 +25,20 @@ async function create(req, res) {
   if (req.body.id) {
     res.status(400).send('Bad request: ID should not be provided, since it is determined automatically by the database.');
   } else {
-    await createUsersEditors(req, res);
+    await users.create({
+      ID_ROLES: req.body.id_roles,
+      NAME: req.body.name,
+      LAST_NAME: req.body.last_name,
+      DNI: req.body.dni,
+      USER: req.body.user,
+      EMAIL: req.body.email,
+      PASSWORD: req.body.password,
+    }).then(() => {
+      console.log(`This is a response ${res}`);
+      res.status(201).end();
+    }).catch((error) => {
+      console.log(`Failed to create a new record : ${error}`);
+    });
     res.status(201).end();
   }
 }

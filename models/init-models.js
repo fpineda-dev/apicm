@@ -1,24 +1,41 @@
-var DataTypes = require("sequelize").DataTypes;
-var _categories = require("./categories");
-var _news = require("./news");
-var _news_categories = require("./news_categories");
-var _users_categories_news = require("./users_categories_news");
-var _users_editors = require("./users_editors");
+/* eslint-disable camelcase */
+const { DataTypes } = require('sequelize');
+// eslint-disable-next-line no-underscore-dangle
+const _categories = require('./categories');
+// eslint-disable-next-line no-underscore-dangle
+const _news = require('./news');
+// eslint-disable-next-line no-underscore-dangle, camelcase
+const _news_categories = require('./news_categories');
+// eslint-disable-next-line no-underscore-dangle
+const _permissions = require('./permissions');
+// eslint-disable-next-line no-underscore-dangle, camelcase
+const _permissions_roles = require('./permissions_roles');
+// eslint-disable-next-line no-underscore-dangle
+const _roles = require('./roles');
+// eslint-disable-next-line no-underscore-dangle
+const _users = require('./users');
+// eslint-disable-next-line no-underscore-dangle
+const _users_categories_news = require('./users_categories_news');
 
 function initModels(sequelize) {
-  var categories = _categories(sequelize, DataTypes);
-  var news = _news(sequelize, DataTypes);
-  var news_categories = _news_categories(sequelize, DataTypes);
-  var users_categories_news = _users_categories_news(sequelize, DataTypes);
-  var users_editors = _users_editors(sequelize, DataTypes);
-
+  const categories = _categories(sequelize, DataTypes);
+  const news = _news(sequelize, DataTypes);
+  const news_categories = _news_categories(sequelize, DataTypes);
+  const permissions = _permissions(sequelize, DataTypes);
+  const permissions_roles = _permissions_roles(sequelize, DataTypes);
+  const roles = _roles(sequelize, DataTypes);
+  const users = _users(sequelize, DataTypes);
+  const users_categories_news = _users_categories_news(sequelize, DataTypes);
 
   return {
     categories,
     news,
     news_categories,
+    permissions,
+    permissions_roles,
+    roles,
+    users,
     users_categories_news,
-    users_editors,
   };
 }
 module.exports = initModels;

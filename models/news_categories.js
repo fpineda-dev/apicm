@@ -9,13 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     ID_NEWS: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     },
     ID_CATEGORY: {
       type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     }
   }, {
     sequelize,
@@ -28,19 +26,17 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "ID_NEWS_CATEGORIES" },
-          { name: "ID_NEWS" },
-          { name: "ID_CATEGORY" },
         ]
       },
       {
-        name: "Refnews1",
+        name: "Ref11",
         using: "BTREE",
         fields: [
           { name: "ID_NEWS" },
         ]
       },
       {
-        name: "Refcategories2",
+        name: "Ref22",
         using: "BTREE",
         fields: [
           { name: "ID_CATEGORY" },
