@@ -27,10 +27,14 @@ const News = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    DATE: {
+    CREATED_AT: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    UPDATE_AT: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {
