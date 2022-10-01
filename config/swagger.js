@@ -10,6 +10,10 @@ const swaggerDefinition = {
   servers: [
     {
       url: "http://localhost:3000/api",
+      description: "Local environment",
+    },
+    {
+      url: "https://hermes-development.up.railway.app/docs/",
       description: "Dev environment",
     },
   ],
