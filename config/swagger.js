@@ -13,7 +13,7 @@ const swaggerDefinition = {
       description: "Local environment",
     },
     {
-      url: "https://hermes-development.up.railway.app/docs/",
+      url: "https://hermes-development.up.railway.app/api",
       description: "Dev environment",
     },
   ],
