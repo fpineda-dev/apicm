@@ -2,7 +2,7 @@ const Category = require("../models/categories");
 
 async function getAll(req, res) {
   const categories = await Category.findAll();
-  res.status(200).json({ categories });
+  res.status(200).json({ success: true, data: categories });
 }
 
 async function getById(req, res) {

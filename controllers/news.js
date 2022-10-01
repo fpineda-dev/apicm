@@ -21,7 +21,7 @@ const getAll = async (req, res) => {
       ],
       order: [["ID_NEWS", "DESC"]],
     });
-    return res.status(200).json({ data: news });
+    return res.status(200).json({ success: true, data: news });
   }
   if (req.query.category) {
     news = await News.findAll({
@@ -36,7 +36,7 @@ const getAll = async (req, res) => {
       ],
       order: [["ID_NEWS", "DESC"]],
     });
-    return res.status(200).json({ data: news });
+    return res.status(200).json({ success: true, data: news });
   }
   news = await News.findAll({
     limit,
@@ -49,7 +49,7 @@ const getAll = async (req, res) => {
     ],
     order: [["ID_NEWS", "DESC"]],
   });
-  res.status(200).json({ data: news });
+  res.status(200).json({ success: true, data: news });
 };
 
 const getById = async (req, res) => {

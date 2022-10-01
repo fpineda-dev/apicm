@@ -2,7 +2,7 @@ const Rol = require("../models/roles");
 
 const getAll = async (req, res) => {
   const roles = await Rol.findAll();
-  res.status(200).json({ roles });
+  res.status(200).json({ success: true, data: roles });
 };
 
 const getById = async (req, res) => {
