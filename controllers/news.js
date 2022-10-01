@@ -1,85 +1,104 @@
-/* eslint-disable curly */
-const { Op } = require('sequelize');
-const { News } = require('../models/news');
-const ErrorResponse = require('../utils/errorResponse');
-const { paginate } = require('../utils/paginate');
+const { Op } = require("sequelize");
+const News = require("../models/news");
+const Category = require("../models/categories");
+require("../models/associations");
+const { paginate } = require("../utils/paginate");
 
-// eslint-disable-next-line consistent-return
 const getAll = async (req, res) => {
   const [limit, offset] = paginate(req);
   let news = {};
-  const count = await News.count({ limit, offset });
+  //const count = await News.count({ limit, offset });
   if (req.query.search) {
     news = await News.findAll({
       where: { TITLE: { [Op.like]: `%${req.query.search}%` } },
       offset,
       limit,
+      include: [
+        {
+          model: Category,
+          through: { attributes: [] },
+        },
+      ],
+      order: [["ID_NEWS", "DESC"]],
     });
-    return res.status(200).json({ count, news });
+    return res.status(200).json({ data: news });
+  }
+  if (req.query.category) {
+    news = await News.findAll({
+      limit,
+      offset,
+      include: [
+        {
+          model: Category,
+          through: { attributes: [] },
+          where: { DESCRIPTION: req.query.category },
+        },
+      ],
+      order: [["ID_NEWS", "DESC"]],
+    });
+    return res.status(200).json({ data: news });
   }
   news = await News.findAll({
     limit,
     offset,
+    include: [
+      {
+        model: Category,
+        through: { attributes: [] },
+      },
+    ],
+    order: [["ID_NEWS", "DESC"]],
   });
-  console.log(news.length);
-  res.status(200).json({ count, news });
+  res.status(200).json({ data: news });
 };
 
-// eslint-disable-next-line consistent-return
-const getById = async (req, res, next) => {
-  const news = await News.findByPk(req.params.id);
-  if (!news) return next(
-    new ErrorResponse(`No existe noticia con el id: ${req.params.id}.`, 404),
-  );
+const getById = async (req, res) => {
+  const news = await News.findByPk(req.params.id, {
+    include: [
+      {
+        model: Category,
+        through: { attributes: [] },
+      },
+    ],
+  });
   res.status(200).json({ success: true, data: news });
 };
 
-// eslint-disable-next-line consistent-return
-const create = async (req, res, next) => {
-  const {
-    TITLE, DESCRIPTION, IMAGE, VIDEO,
-  } = req.body;
-  if (!TITLE) return next(new ErrorResponse(`El 'TITLE' es un campo requerido... ${404}`));
+const create = async (req, res) => {
+  const { ID_CATEGORY, TITLE, DESCRIPTION, IMAGE, VIDEO } = req.body;
+  const category = await Category.findByPk(ID_CATEGORY);
   const news = await News.create({
     TITLE,
     DESCRIPTION,
     IMAGE,
     VIDEO,
   });
+  news.addCategories(category);
   res.status(201).json({
     success: true,
     data: news,
   });
 };
-// eslint-disable-next-line consistent-return
-const update = async (req, res, next) => {
-  const {
-    TITLE, DESCRIPTION, IMAGE, VIDEO,
-  } = req.body;
-  console.log(TITLE);
-  if (!TITLE) return next(new ErrorResponse(`El 'TITLE' es un campo requerido.. ${404}`));
+
+const update = async (req, res) => {
+  const { ID_CATEGORY, TITLE, DESCRIPTION, IMAGE, VIDEO } = req.body;
+  const category = await Category.findByPk(ID_CATEGORY);
   const news = await News.findByPk(req.params.id);
-  if (!news) return next(
-    new ErrorResponse(`No existe noticia con el id: ${req.params.id}.`, 404),
-  );
   await news.update({
     TITLE,
     DESCRIPTION,
     IMAGE,
     VIDEO,
   });
+  news.setCategories(category);
   res.status(200).json({
     success: true,
     data: news,
   });
 };
 
-// eslint-disable-next-line consistent-return
-const remove = async (req, res, next) => {
+const remove = async (req, res) => {
   const news = await News.findByPk(req.params.id);
-  if (!news) return next(
-    new ErrorResponse(`No existe noticia con el id: ${req.params.id}.`, 404),
-  );
   await news.destroy();
   res.status(200).json({ success: true, data: {} });
 };

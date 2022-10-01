@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/mysql");
 
-const categories = sequelize.define(
+const Category = sequelize.define(
   "categories",
   {
     ID_CATEGORY: {
@@ -30,4 +30,4 @@ const categories = sequelize.define(
   }
 );
 
-module.exports = categories;
+module.exports = Category;

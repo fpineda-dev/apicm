@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
+const validatorResults = require("../utils/handleValidator");
+const { validatorBody, validatorId } = require("../validators/news");
 // eslint-disable-next-line import/no-extraneous-dependencies
-// const bodyParser = require('body-parser');
-
 const router = express.Router();
 const {
   getAll,
@@ -9,69 +9,16 @@ const {
   create,
   update,
   remove,
-} = require('../controllers/news');
+} = require("../controllers/news");
 
-router.get('/', getAll);
-router.get('/:id', getById);
-router.post('/', create);
-router.put('/:id', update);
-router.delete('/:id', remove);
-
-/* const controllers = {
-  // eslint-disable-next-line global-require
-  users: require('../controllers/users'),
-};
-
-const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// We create a wrapper to workaround async errors not being transmitted correctly.
-function makeHandlerAwareOfAsyncErrors(handler) {
-  // eslint-disable-next-line func-names
-  return async function (req, res, next) {
-    try {
-      await handler(req, res);
-    } catch (error) {
-      next(error);
-    }
-  };
-}
-
-// We define the standard REST APIs for each controller (if they exist).
-// eslint-disable-next-line no-restricted-syntax
-for (const [routeName, routeController] of Object.entries(controllers)) {
-  if (routeController.getAll) {
-    router.get(
-      `/api/${routeName}`,
-      makeHandlerAwareOfAsyncErrors(routeController.getAll),
-    );
-  }
-  if (routeController.getById) {
-    router.get(
-      `/api/${routeName}/:id`,
-      makeHandlerAwareOfAsyncErrors(routeController.getById),
-    );
-  }
-  if (routeController.create) {
-    router.post(
-      `/api/${routeName}`,
-      makeHandlerAwareOfAsyncErrors(routeController.create),
-    );
-  }
-  if (routeController.update) {
-    router.put(
-      `/api/${routeName}/:id`,
-      makeHandlerAwareOfAsyncErrors(routeController.update),
-    );
-  }
-  if (routeController.remove) {
-    router.delete(
-      `/api/${routeName}/:id`,
-      makeHandlerAwareOfAsyncErrors(routeController.remove),
-    );
-  }
-} */
+router.get("/", getAll);
+router.get("/:id", [...validatorId, validatorResults], getById);
+router.post("/", [...validatorBody, validatorResults], create);
+router.put(
+  "/:id",
+  [...validatorId, ...validatorBody, validatorResults],
+  update
+);
+router.delete("/:id", [...validatorId, validatorResults], remove);
 
 module.exports = router;

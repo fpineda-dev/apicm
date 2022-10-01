@@ -1,43 +1,52 @@
-const { check } = require('express-validator');
-const validatorResults = require('../utils/handleValidator');
+const { check } = require("express-validator");
+const {
+  thereIsUser,
+  thereIsRol,
+  thereIsEmail,
+} = require("../validators/db-validators");
 
-const validatorCreateUser = [
-  check('id_roles')
+const validatorId = [check("id").custom(thereIsUser)];
+
+const validatorBody = [
+  check("ID_ROLES")
     .exists()
-    .notEmpty(),
-  check('name')
+    .withMessage("El 'ID_ROLES' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'ID_ROLES' no puede estar vacío")
+    .custom(thereIsRol),
+  check("NAME")
     .exists()
-    .notEmpty(),
-  check('last_name')
+    .withMessage("El 'NAME' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'NAME' no puede estar vacío"),
+  check("LAST_NAME")
     .exists()
-    .notEmpty(),
-  check('dni')
+    .withMessage("El 'LAST_NAME' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'LAST_NAME' no puede estar vacío"),
+  check("DNI")
     .exists()
-    .notEmpty(),
-  check('user')
+    .withMessage("El 'DNI' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'DNI' no puede estar vacío"),
+  check("USER")
     .exists()
-    .notEmpty(),
-  check('email')
+    .withMessage("El 'USER' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'USER' no puede estar vacío"),
+  check("EMAIL")
     .exists()
-    .notEmpty(),
-  check('password')
+    .withMessage("El 'EMAIL' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'EMAIL' no puede estar vacío")
+    .isEmail()
+    .withMessage("El campo 'EMAIL' debe ser válido")
+    .custom(thereIsEmail),
+  check("PASSWORD")
     .exists()
-    .notEmpty(),
-  (req, res, next) => {
-    validatorResults(req, res, next);
-  },
+    .withMessage("El 'PASSWORD' es un campo requerido")
+    .notEmpty()
+    .withMessage("El campo 'PASSWORD' no puede estar vacío"),
 ];
 
-const validatorUpdateUser = [
-  check('user')
-    .exists()
-    .notEmpty(),
-  check('password')
-    .exists()
-    .notEmpty(),
-  (req, res, next) => {
-    validatorResults(req, res, next);
-  },
-];
-
-module.exports = { validatorCreateUser, validatorUpdateUser };
+module.exports = { validatorBody, validatorId };

@@ -1,22 +1,14 @@
-const { check } = require('express-validator');
-const validatorResults = require('../utils/handleValidator');
+const { check } = require("express-validator");
+const { thereIsCategory } = require("../validators/db-validators");
 
-const validatorCreateCategories = [
-  check('description')
+const validatorId = [check("id").custom(thereIsCategory)];
+
+const validatorBody = [
+  check("DESCRIPTION")
     .exists()
-    .notEmpty(),
-  (req, res, next) => {
-    validatorResults(req, res, next);
-  },
+    .withMessage("La 'DESCRIPTION' es un campo requerido")
+    .notEmpty()
+    .withMessage("La 'DESCRIPTION' no puede estar vacío"),
 ];
 
-const validatorUpdateCategories = [
-  check('description')
-    .exists()
-    .notEmpty(),
-  (req, res, next) => {
-    validatorResults(req, res, next);
-  },
-];
-
-module.exports = { validatorCreateCategories, validatorUpdateCategories };
+module.exports = { validatorId, validatorBody };
