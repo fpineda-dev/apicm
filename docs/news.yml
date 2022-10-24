@@ -1,0 +1,279 @@
+paths:
+  /news:
+    get:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - news
+      summary: Get all news
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/News"
+    post:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - news
+      summary: Create a news
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/News"
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/News"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        msg:
+                          type: string
+                          example: El 'TITLE' es un campo requerido
+                        param:
+                          type: string
+                          example: "TITLE"
+                        location:
+                          type: string
+                          example: body
+  /news/{id}:
+    get:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - news
+      summary: Get a news by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/News"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe news con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    patch:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - news
+      summary: Update a news
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/News"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/News"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe news con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    delete:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - news
+      summary: Delete a news
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe news con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"       
+  
+
+components:
+  securitySchemes:
+       basicAuth:
+         type: apiKey
+         in: header
+         name: x-access-token
+         scheme: basic
+       bearerAuth:
+         type: http
+         in: header
+         name: Authorization
+         scheme: bearer
+         bearerFormat: JWT
+  schemas:
+    News:
+      required:
+        - TITLE
+      type: object
+      properties:
+        ID_NEWS:
+          type: integer
+          example: 1
+        ID_CATEGORY:
+          type: integer
+          example: 1
+        TITLE:
+          type: string
+          example: "Carlsen, espléndido (y III)"
+        DESCRIPTION:
+          type: string
+          example: "Otra gran muestra del virtuosismo del campeón en plena forma; aquí, en una posición típica de la Indo-Benoni"
+        IMAGE:
+          type: string
+          example: ""
+        VIDEO:
+          type: string
+          example: https://www.youtube.com/watch?v=WjEmquJhSas
+

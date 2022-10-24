@@ -1,0 +1,227 @@
+paths:
+  /categories:
+    get:
+      tags:
+        - categories
+      summary: Get all categories
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Category"
+    post:
+      tags:
+        - categories
+      summary: Create a category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Category"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        msg:
+                          type: string
+                          example: La 'DESCRIPTION' es un campo requerido
+                        param:
+                          type: string
+                          example: "DESCRIPTION"
+                        location:
+                          type: string
+                          example: body
+  /categories/{id}:
+    get:
+      tags:
+        - categories
+      summary: Get a category by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Category"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe categoría con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    put:
+      tags:
+        - categories
+      summary: Update a category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Category"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe categoría con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    delete:
+      tags:
+        - categories
+      summary: Delete a category
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe categoría con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+
+components:
+  schemas:
+    Category:
+      required:
+        - DESCRIPTION
+      type: object
+      properties:
+        ID_CATEGORY:
+          type: integer
+          example: 1
+        DESCRIPTION:
+          type: string
+          example: Deportes

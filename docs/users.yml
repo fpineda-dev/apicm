@@ -1,0 +1,325 @@
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: Get all users
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+    post:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Create a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        msg:
+                          type: string
+                          example: El 'ID_ROLES' es un campo requerido
+                        param:
+                          type: string
+                          example: "ID_ROLES"
+                        location:
+                          type: string
+                          example: body
+
+  /users/{email}/{password}:
+    get:      
+      tags:
+        - users
+      summary: Get a signed user
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: path
+          require: true
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "user@email.com"
+                        msg:
+                          type: string
+                          example: "The user was not found"
+                        param:
+                          type: string
+                          example: "name"
+                        location:
+                          type: string
+                          example: "params"
+
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: Get a user by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe usuario con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    patch:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Update a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe usuario con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    delete:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - users
+      summary: Delete a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe usuario con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+
+components:
+  securitySchemes:
+       basicAuth:
+         type: apiKey
+         in: header
+         name: x-access-token
+         scheme: basic
+       bearerAuth:
+         type: http
+         in: header
+         name: Authorization
+         scheme: bearer
+         bearerFormat: JWT
+
+  schemas:
+    User:
+      required:
+        - ID_ROLES
+        - NAME
+        - LAST_NAME
+        - DNI
+        - USERNAME
+        - EMAIL
+        - PASSWORD
+      type: object
+      properties:
+        ID_ROLES:
+          type: integer
+          example: 1
+        NAME:
+          type: string
+          example: Larry
+        LAST_NAME:
+          type: string
+          example: Barreto
+        DNI:
+          type: string
+          example: 55555555
+        USERNAME:
+          type: string
+          example: larrysbarretot
+        EMAIL:
+          type: string
+          example: larrysbarretot@gmail.com
+        PASSWORD:
+          type: string
+          example: 123superseguro

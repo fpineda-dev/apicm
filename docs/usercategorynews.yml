@@ -1,0 +1,104 @@
+paths:  
+  /categorynews:
+    get:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - CategoriesNews
+      summary: Get all usersCategoriesNews      
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/categorynews"
+
+  
+  /categorynews/{id}:
+    patch:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
+      tags:
+        - CategoriesNews
+      summary: Update a usersCategoriesNews
+      parameters:
+        - in: path
+          name: id          
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/categorynews"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/categorynews"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe usersCategoriesNews con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"              
+  
+
+components:
+  securitySchemes:
+       basicAuth:
+         type: apiKey
+         in: header
+         name: x-access-token
+         scheme: basic
+       bearerAuth:
+         type: http
+         in: header
+         name: Authorization
+         scheme: bearer
+         bearerFormat: JWT
+  schemas:
+    categorynews:
+      required:
+        - STATUS_NEWS
+      type: object
+      properties:
+        STATUS_NEWS:
+          type: integer
+          example: 1
+        

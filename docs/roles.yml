@@ -1,0 +1,234 @@
+paths:
+  /roles:
+    get:
+      tags:
+        - roles
+      summary: Get all roles
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Rol"
+    post:
+      tags:
+        - roles
+      summary: Create a rol
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rol"
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Rol"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        msg:
+                          type: string
+                          example: El 'NAME' es un campo requerido
+                        param:
+                          type: string
+                          example: "NAME"
+                        location:
+                          type: string
+                          example: body
+  /roles/{id}:
+    get:
+      tags:
+        - roles
+      summary: Get a rol by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Rol"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe rol con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    put:
+      tags:
+        - roles
+      summary: Update a rol
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rol"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/Rol"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe rol con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+    delete:
+      tags:
+        - roles
+      summary: Delete a rol
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "1234567"
+                        msg:
+                          type: string
+                          example: "No existe rol con el id: 1234567"
+                        param:
+                          type: string
+                          example: "id"
+                        location:
+                          type: string
+                          example: "params"
+
+components:
+  schemas:
+    Rol:
+      required:
+        - NAME
+        - TOKEN
+      type: object
+      properties:
+        ID_ROLES:
+          type: integer
+          example: 1
+        NAME:
+          type: string
+          example: editor
+        TOKEN:
+          type: string
+          example: asdfjaksdfjklasdf
+        ACTIVE:
+          type: integer
+          example: 1
