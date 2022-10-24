@@ -1,4 +1,4 @@
-const Rol = require("../models/roles");
+const Rol = require('../models/roles');
 
 const getAll = async (req, res) => {
   const roles = await Rol.findAll();

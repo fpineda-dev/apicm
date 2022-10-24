@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/mysql");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/mysql');
 
 const NewsCategories = sequelize.define(
-  "news_categories",
+  'news_categories',
   {
     ID_NEWS_CATEGORIES: {
       autoIncrement: true,
@@ -21,27 +21,27 @@ const NewsCategories = sequelize.define(
   },
   {
     sequelize,
-    tableName: "news_categories",
+    tableName: 'news_categories',
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "ID_NEWS_CATEGORIES" }],
+        using: 'BTREE',
+        fields: [{ name: 'ID_NEWS_CATEGORIES' }],
       },
       {
-        name: "Ref11",
-        using: "BTREE",
-        fields: [{ name: "ID_NEWS" }],
+        name: 'Ref11',
+        using: 'BTREE',
+        fields: [{ name: 'ID_NEWS' }],
       },
       {
-        name: "Ref22",
-        using: "BTREE",
-        fields: [{ name: "ID_CATEGORY" }],
+        name: 'Ref22',
+        using: 'BTREE',
+        fields: [{ name: 'ID_CATEGORY' }],
       },
     ],
-  }
+  },
 );
 
 module.exports = NewsCategories;

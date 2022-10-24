@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/mysql");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/mysql');
 
 const User = sequelize.define(
-  "users",
+  'users',
   {
     ID_USERS: {
       autoIncrement: true,
@@ -26,14 +26,14 @@ const User = sequelize.define(
       type: DataTypes.STRING(50),
       allowNull: true,
     },
-    USER: {
+    USERNAME: {
       type: DataTypes.STRING(50),
       allowNull: true,
     },
     EMAIL: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: "user_EMAIL_uk",
+      unique: 'user_EMAIL_uk',
     },
     PASSWORD: {
       type: DataTypes.STRING(200),
@@ -42,28 +42,28 @@ const User = sequelize.define(
   },
   {
     sequelize,
-    tableName: "users",
+    tableName: 'users',
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "ID_USERS" }],
+        using: 'BTREE',
+        fields: [{ name: 'ID_USERS' }],
       },
       {
-        name: "user_EMAIL_uk",
+        name: 'user_EMAIL_uk',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "EMAIL" }],
+        using: 'BTREE',
+        fields: [{ name: 'EMAIL' }],
       },
       {
-        name: "Ref67",
-        using: "BTREE",
-        fields: [{ name: "ID_ROLES" }],
+        name: 'Ref67',
+        using: 'BTREE',
+        fields: [{ name: 'ID_ROLES' }],
       },
     ],
-  }
+  },
 );
 
 module.exports = {

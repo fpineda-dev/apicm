@@ -1,7 +1,7 @@
-const Category = require("../models/categories");
-const Rol = require("../models/roles");
-const News = require("../models/news");
-const { User } = require("../models/users");
+const Category = require('../models/categories');
+const Rol = require('../models/roles');
+const News = require('../models/news');
+const { User } = require('../models/users');
 
 const thereIsNews = async (id) => {
   const news = await News.findByPk(id);
@@ -25,7 +25,7 @@ const thereIsRol = async (id) => {
 
 const thereIsEmail = async (EMAIL) => {
   const user = await User.findOne({ where: { EMAIL } });
-  if (user) throw new Error(`El email ingresado ya está registrado`);
+  if (user) throw new Error('El email ingresado ya está registrado');
 };
 
 module.exports = {

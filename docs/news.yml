@@ -1,6 +1,9 @@
 paths:
   /news:
     get:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - news
       summary: Get all news
@@ -30,6 +33,9 @@ paths:
                     items:
                       $ref: "#/components/schemas/News"
     post:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - news
       summary: Create a news
@@ -75,6 +81,9 @@ paths:
                           example: body
   /news/{id}:
     get:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - news
       summary: Get a news by id
@@ -121,7 +130,10 @@ paths:
                         location:
                           type: string
                           example: "params"
-    put:
+    patch:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - news
       summary: Update a news
@@ -175,6 +187,9 @@ paths:
                           type: string
                           example: "params"
     delete:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - news
       summary: Delete a news
@@ -221,9 +236,22 @@ paths:
                           example: "id"
                         location:
                           type: string
-                          example: "params"
+                          example: "params"       
+  
 
 components:
+  securitySchemes:
+       basicAuth:
+         type: apiKey
+         in: header
+         name: x-access-token
+         scheme: basic
+       bearerAuth:
+         type: http
+         in: header
+         name: Authorization
+         scheme: bearer
+         bearerFormat: JWT
   schemas:
     News:
       required:
@@ -231,6 +259,9 @@ components:
       type: object
       properties:
         ID_NEWS:
+          type: integer
+          example: 1
+        ID_CATEGORY:
           type: integer
           example: 1
         TITLE:
@@ -245,3 +276,4 @@ components:
         VIDEO:
           type: string
           example: https://www.youtube.com/watch?v=WjEmquJhSas
+

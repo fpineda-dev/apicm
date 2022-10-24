@@ -19,6 +19,9 @@ paths:
                     items:
                       $ref: "#/components/schemas/User"
     post:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - users
       summary: Create a user
@@ -62,6 +65,61 @@ paths:
                         location:
                           type: string
                           example: body
+
+  /users/{email}/{password}:
+    get:      
+      tags:
+        - users
+      summary: Get a signed user
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: path
+          require: true
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/User"
+        404:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: "user@email.com"
+                        msg:
+                          type: string
+                          example: "The user was not found"
+                        param:
+                          type: string
+                          example: "name"
+                        location:
+                          type: string
+                          example: "params"
+
   /users/{id}:
     get:
       tags:
@@ -110,7 +168,10 @@ paths:
                         location:
                           type: string
                           example: "params"
-    put:
+    patch:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - users
       summary: Update a user
@@ -164,6 +225,9 @@ paths:
                           type: string
                           example: "params"
     delete:
+      security:
+        - basicAuth: []
+        - bearerAuth: []
       tags:
         - users
       summary: Delete a user
@@ -213,6 +277,19 @@ paths:
                           example: "params"
 
 components:
+  securitySchemes:
+       basicAuth:
+         type: apiKey
+         in: header
+         name: x-access-token
+         scheme: basic
+       bearerAuth:
+         type: http
+         in: header
+         name: Authorization
+         scheme: bearer
+         bearerFormat: JWT
+
   schemas:
     User:
       required:
@@ -220,7 +297,7 @@ components:
         - NAME
         - LAST_NAME
         - DNI
-        - USER
+        - USERNAME
         - EMAIL
         - PASSWORD
       type: object
@@ -237,7 +314,7 @@ components:
         DNI:
           type: string
           example: 55555555
-        USER:
+        USERNAME:
           type: string
           example: larrysbarretot
         EMAIL:

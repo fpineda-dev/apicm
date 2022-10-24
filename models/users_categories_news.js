@@ -1,63 +1,69 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users_categories_news', {
-    ID_USERS_CATEGORIES_NEWS: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+const { Sequelize, DataTypes } = require('sequelize');
+
+const sequelize = require('../config/mysql');
+
+const usersCategoriesNews = sequelize.define('users_categories_news', {
+  ID_USERS_CATEGORIES_NEWS: {
+    autoIncrement: true,
+    type: DataTypes.BIGINT,
+    allowNull: false,
+    primaryKey: true,
+  },
+  ID_NEWS: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  ID_CATEGORY: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  ID_USERS: {
+    type: DataTypes.BIGINT,
+    allowNull: true,
+  },
+  ID_ROLES: {
+    type: DataTypes.BIGINT,
+    allowNull: false,
+  },
+  STATUS_NEWS: {
+    type: DataTypes.TINYINT,
+    allowNull: true,
+  },
+}, {
+  Sequelize,
+  tableName: 'users_categories_news',
+  timestamps: false,
+  indexes: [
+    {
+      name: 'PRIMARY',
+      unique: true,
+      using: 'BTREE',
+      fields: [
+        { name: 'ID_USERS_CATEGORIES_NEWS' },
+      ],
     },
-    ID_NEWS: {
-      type: DataTypes.BIGINT,
-      allowNull: false
+    {
+      name: 'users_ID_USERS_fk',
+      using: 'BTREE',
+      fields: [
+        { name: 'ID_USERS' },
+      ],
     },
-    ID_USERS_EDITORS: {
-      type: DataTypes.BIGINT,
-      allowNull: false
+    {
+      name: 'Ref13',
+      using: 'BTREE',
+      fields: [
+        { name: 'ID_NEWS' },
+      ],
     },
-    ID_USERS: {
-      type: DataTypes.BIGINT,
-      allowNull: true
+    {
+      name: 'Ref44',
+      using: 'BTREE',
+      fields: [
+        { name: 'ID_ROLES' },
+      ],
     },
-    ID_ROLES: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'users_categories_news',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "ID_USERS_CATEGORIES_NEWS" },
-        ]
-      },
-      {
-        name: "users_ID_USERS_fk",
-        using: "BTREE",
-        fields: [
-          { name: "ID_USERS" },
-        ]
-      },
-      {
-        name: "Ref13",
-        using: "BTREE",
-        fields: [
-          { name: "ID_NEWS" },
-        ]
-      },
-      {
-        name: "Ref44",
-        using: "BTREE",
-        fields: [
-          { name: "ID_ROLES" },
-          { name: "ID_USERS_EDITORS" },
-        ]
-      },
-    ]
-  });
-};
+  ],
+});
+
+module.exports = usersCategoriesNews;

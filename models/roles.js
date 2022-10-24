@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
-const sequelize = require("../config/mysql");
+const sequelize = require('../config/mysql');
 
 const Rol = sequelize.define(
-  "roles",
+  'roles',
   {
     ID_ROLES: {
       autoIncrement: true,
@@ -14,15 +14,11 @@ const Rol = sequelize.define(
     NAME: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      unique: "roles_NAME_uk",
+      unique: 'roles_NAME_uk',
     },
     TOKEN: {
       type: DataTypes.TEXT,
       allowNull: false,
-    },
-    UPDATE_AT: {
-      type: DataTypes.DATE,
-      allowNull: true,
     },
     ACTIVE: {
       type: DataTypes.TINYINT,
@@ -32,23 +28,23 @@ const Rol = sequelize.define(
   },
   {
     sequelize,
-    tableName: "roles",
+    tableName: 'roles',
     timestamps: true,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "ID_ROLES" }],
+        using: 'BTREE',
+        fields: [{ name: 'ID_ROLES' }],
       },
       {
-        name: "roles_NAME_uk",
+        name: 'roles_NAME_uk',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "NAME" }],
+        using: 'BTREE',
+        fields: [{ name: 'NAME' }],
       },
     ],
-  }
+  },
 );
 
 module.exports = Rol;

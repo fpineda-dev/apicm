@@ -1,14 +1,14 @@
-const { check } = require("express-validator");
-const { thereIsCategory } = require("../validators/db-validators");
+const { check } = require('express-validator');
+const { thereIsCategory } = require('./db-validators');
 
-const validatorId = [check("id").custom(thereIsCategory)];
+const validatorId = [check('id').custom(thereIsCategory)];
 
 const validatorBody = [
-  check("DESCRIPTION")
+  check('DESCRIPTION')
     .exists()
-    .withMessage("La 'DESCRIPTION' es un campo requerido")
+    .withMessage('La \'DESCRIPTION\' es un campo requerido')
     .notEmpty()
-    .withMessage("La 'DESCRIPTION' no puede estar vacío"),
+    .withMessage('La \'DESCRIPTION\' no puede estar vacío'),
 ];
 
 module.exports = { validatorId, validatorBody };

@@ -1,9 +1,9 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = require("../config/mysql");
+const sequelize = require('../config/mysql');
 
 const News = sequelize.define(
-  "news",
+  'news',
   {
     ID_NEWS: {
       autoIncrement: true,
@@ -30,26 +30,30 @@ const News = sequelize.define(
     CREATED_AT: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal("CURRENT_TIMESTAMP"),
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
     },
     UPDATE_AT: {
       type: DataTypes.DATE,
       allowNull: true,
     },
+    NAME_EDITOR: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    tableName: "news",
+    tableName: 'news',
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "ID_NEWS" }],
+        using: 'BTREE',
+        fields: [{ name: 'ID_NEWS' }],
       },
     ],
-  }
+  },
 );
 
 module.exports = News;

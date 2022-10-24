@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/mysql");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/mysql');
 
 const Category = sequelize.define(
-  "categories",
+  'categories',
   {
     ID_CATEGORY: {
       autoIncrement: true,
@@ -17,17 +17,17 @@ const Category = sequelize.define(
   },
   {
     sequelize,
-    tableName: "categories",
+    tableName: 'categories',
     timestamps: false,
     indexes: [
       {
-        name: "PRIMARY",
+        name: 'PRIMARY',
         unique: true,
-        using: "BTREE",
-        fields: [{ name: "ID_CATEGORY" }],
+        using: 'BTREE',
+        fields: [{ name: 'ID_CATEGORY' }],
       },
     ],
-  }
+  },
 );
 
 module.exports = Category;

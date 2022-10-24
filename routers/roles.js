@@ -1,6 +1,6 @@
-const express = require("express");
-const validatorResults = require("../utils/handleValidator");
-const { validatorBody, validatorId } = require("../validators/roles");
+const express = require('express');
+const validatorResults = require('../utils/handleValidator');
+const { validatorBody, validatorId } = require('../validators/roles');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const router = express.Router();
 const {
@@ -9,16 +9,16 @@ const {
   create,
   update,
   remove,
-} = require("../controllers/roles");
+} = require('../controllers/roles');
 
-router.get("/", getAll);
-router.get("/:id", [...validatorId, validatorResults], getById);
-router.post("/", [...validatorBody, validatorResults], create);
+router.get('/', getAll);
+router.get('/:id', [...validatorId, validatorResults], getById);
+router.post('/', [...validatorBody, validatorResults], create);
 router.put(
-  "/:id",
+  '/:id',
   [...validatorId, ...validatorBody, validatorResults],
-  update
+  update,
 );
-router.delete("/:id", [...validatorId, validatorResults], remove);
+router.delete('/:id', [...validatorId, validatorResults], remove);
 
 module.exports = router;
