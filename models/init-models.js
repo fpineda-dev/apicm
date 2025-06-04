@@ -16,6 +16,14 @@ const _roles = require('./roles');
 const _users = require('./users');
 // eslint-disable-next-line no-underscore-dangle
 const _users_categories_news = require('./users_categories_news');
+// eslint-disable-next-line no-underscore-dangle
+// const _deductions = require('./deductions');
+// eslint-disable-next-line no-underscore-dangle
+const _departments = require('./departments');
+// eslint-disable-next-line no-underscore-dangle
+const _entries = require('./financial_statements');
+// eslint-disable-next-line no-underscore-dangle
+const _organization = require('./organization');
 
 function initModels(sequelize) {
   const categories = _categories(sequelize, DataTypes);
@@ -26,6 +34,10 @@ function initModels(sequelize) {
   const roles = _roles(sequelize, DataTypes);
   const users = _users(sequelize, DataTypes);
   const users_categories_news = _users_categories_news(sequelize, DataTypes);
+  // const deductions = _deductions(sequelize, DataTypes);
+  const departments = _departments(sequelize, DataTypes);
+  const entries = _entries(sequelize, DataTypes);
+  const organization = _organization(sequelize, DataTypes);
 
   return {
     categories,
@@ -36,6 +48,10 @@ function initModels(sequelize) {
     roles,
     users,
     users_categories_news,
+    // deductions,
+    departments,
+    entries,
+    organization,
   };
 }
 module.exports = initModels;
