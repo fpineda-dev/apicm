@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const sequelize = require('../config/mysql');
 
@@ -18,7 +18,6 @@ const Organization = sequelize.define(
     CREATED_ON: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
     },
     SERVICE: {
       type: DataTypes.TINYINT(1),
