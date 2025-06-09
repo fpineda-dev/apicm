@@ -13,12 +13,16 @@ const app = express();
 
 const server = http.createServer(app);
 
-require('socket.io')(server, {
+// eslint-disable-next-line import/order
+const io = require('socket.io')(server, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
+
+console.log(io);
 
 app.use(cors());
 app.use(express.json({ limit: '100mb' }));
