@@ -13,7 +13,7 @@ const app = express();
 
 const server = http.createServer(app);
 
-require('socket')(server, {
+require('socket.io')(server, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST'],
