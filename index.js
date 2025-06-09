@@ -1,6 +1,5 @@
 /* eslint-disable import/no-unresolved */
 require('dotenv').config();
-const http = require('http');
 const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
@@ -10,20 +9,6 @@ const swaggerSpec = require('./config/swagger');
 const { router } = require('./routers');
 
 const app = express();
-
-const server = http.createServer(app);
-
-// eslint-disable-next-line import/order
-const io = require('socket.io')(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
-});
-
-console.log(io);
-
 app.use(cors());
 app.use(express.json({ limit: '100mb' }));
 // Passport middleware
