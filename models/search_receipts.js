@@ -23,9 +23,9 @@ async function foundReceipts(from, to, iddepa) {
     // eslint-disable-next-line camelcase
     const result = await getPool.query(`SELECT date_add(created_on, interval 1 day) as 'created_at', (total_tithes + total) as 'total', (ifnull(deductions, 0) + ifnull(receipts, 0)) as 'deductions' FROM(
     select DATE_FORMAT(f.created_on,"%Y-%m-%d") as created_on, f.total_tithes, f.total,
-    (d.speccial_help + d.payment_pastor + d.tithe_of_tithes) as 'deductions',  sum(r.amount) as 'receipts' from icmdb.financial_statements f 
-    left join icmdb.deductions d on f.id_financial_statements = d.id_financial_statements
-    left join icmdb.receipts r on f.id_financial_statements = r.id_financial_statements
+    (d.speccial_help + d.payment_pastor + d.tithe_of_tithes) as 'deductions',  sum(r.amount) as 'receipts' from sql10783187.financial_statements f 
+    left join sql10783187.deductions d on f.id_financial_statements = d.id_financial_statements
+    left join sql10783187.receipts r on f.id_financial_statements = r.id_financial_statements
     where f.created_on between ? and ? and f.id_department = ?
     group by created_on, f.total_tithes, f.total, deductions) AS finances;`, [from, to, iddepa]);
 
