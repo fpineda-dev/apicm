@@ -28,8 +28,8 @@ getPool();
 module.exports = {
   getConnection: () => pool,
   query: async (sql, values) => {
-    const { receipt } = values;
-    console.log(`Values \n ${receipt}`);
+    // const { receipt } = values;
+    // console.log(`Values \n ${receipt}`);
     try {
       const [rows] = await pool.execute(sql, values);
       return rows;

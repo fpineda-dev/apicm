@@ -7,6 +7,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const swaggerSpec = require('./config/swagger');
 const { router } = require('./routers');
+require('./utils/sendmail');
 
 const app = express();
 app.use(cors());
