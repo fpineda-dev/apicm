@@ -9,11 +9,11 @@ async function healthCheck() {
   try {
     // connection = await pool.getConnection();
     /*
-    call sql10783187.Reports_ICMCR_DocumentosDiario(?, ?, ?);
+    call sql10795605.Reports_ICMCR_DocumentosDiario(?, ?, ?);
     */
 
     // eslint-disable-next-line camelcase, quotes
-    const result = await getPool.query(`select count(*) as 'Review' from sql10783187.financial_statements limit 1;`);
+    const result = await getPool.query(`select count(*) as 'Review' from sql10795605.financial_statements limit 1;`);
     /* .then((res) => {
       console.log(res);
       // return res;
